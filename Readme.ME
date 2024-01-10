@@ -7,6 +7,7 @@
 
   data目录中为：
     corr目录：由加权相关系数筛选出来的具有32、64个特征的训练和检验数据集。
+    el目录：用于集成学习的数据集
     npy目录：经过PCA的数据集。
     rfe目录：通过SVM、随机森林和逻辑回归为学习器，进行递归特征消除得到特征，以随机森林为主得到32、64、96个特征的数据集，64的效果最好，因此逻辑回归和SVM为学习器的筛选也选出64个特征。
     test_2000_x.csv， train_10000.csv， validate_1000.csv：原始数据
@@ -15,13 +16,24 @@
 
   models目录中为：
     corr目录：学习经过相关系数筛选数据的，具有不同数目决策树的随机森林模型。
+    el目录：用于集成学习的模型
     pac目录：学习pca降维后的随机森林模型。
     rfe目录：学习经过递归特征消除的随机森林、SVM和逻辑回归模型。
     random_forest_model.pkl、 random_forest_model_n100.pkl：没有进行特征筛选的随机森林模型。
 
-  select_feature.txt：根据加权相关系数选择出来的特征。
+  ensemble_learning.py：集成五个模型对test做出一个预测
 
-  select_feature.txt：根据递归特征消除选择出来的特征。
+  selected_feature.txt：根据加权相关系数选择出来的特征。
+
+  selected_Logicfeature_rfe.txt：基于逻辑回归的递归特征消除选择出来的特征。
+
+  selected_RFfeature_rfe.txt：基于随机森林的递归特征消除选择出来的特征。
+
+  selected_SVMfeature_rfe.txt：基于SVM的递归特征消除选择出来的特征。
+
+  selected_feature_rfe.txt：根据递归特征消除选择出来的特征，是个测试文件。
+
+  tes2000_data.py：对test_2000.csv数据集进行处理，从中根据已经筛选的特征构建三个数据集
 
   test.py：进行模型测试和准确度分析。
 
@@ -31,4 +43,4 @@
 
   validate_data.py：对测试数据进行预处理。
 
-  work.py：一个无用的测试文件，构建整个项目时在这里对代码先运行一下看看效果，并且运行一下各个模型结果进行对比。
+  work.py：一个测试文件，构建整个项目时在这里对代码先运行一下看看效果，并且运行一下各个模型结果进行对比。
