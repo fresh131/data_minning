@@ -159,14 +159,15 @@ def rfe_select(num_of_selected_features = 64):
     label = feature_label['label']
 
 
-    # clf = SVC(decision_function_shape='ovr',kernel='linear')
-    # rfe = RFE(clf, n_features_to_select=num_of_selected_features,importance_getter='coef_')
+    clf = SVC(decision_function_shape='ovr',kernel='linear',random_state=400)
+    rfe = RFE(clf, n_features_to_select=num_of_selected_features,importance_getter='coef_')
 
-    # clf = LogisticRegression(multi_class='ovr')
+    # clf = LogisticRegression(multi_class='ovr',random_state=400)
     # rfe = RFE(clf, n_features_to_select=num_of_selected_features)
 
-    clf = RandomForestClassifier()
-    rfe = RFE(clf,n_features_to_select=num_of_selected_features)
+    # clf = RandomForestClassifier(random_state=400)
+    # rfe = RFE(clf,n_features_to_select=num_of_selected_features)
+
     rfe.fit(features,label)
 
     select_features = features.columns[rfe.support_].tolist()
@@ -174,10 +175,10 @@ def rfe_select(num_of_selected_features = 64):
     selected_data = feature_label.loc[:, select_features + ['label']]
 
     # 存入CSV文件
-    selected_data.to_csv('data/rfe/selected_train_data_'+str(num_of_selected_features)+'features_Logicrfe.csv', index=False)
+    selected_data.to_csv('data/el/SVM_train_'+str(num_of_selected_features)+'features.csv', index=False)
 
     #存入txt文件
-    with open('selected_feature_rfe.txt','w+') as file:
+    with open('selected_SVMfeature_rfe.txt','w+') as file:
         for index in select_features:
             file.write(index + '\n') #f"{feature}\n"
     print(selected_data)
@@ -194,7 +195,7 @@ def main(pattern = 'corr', num_of_selected_features=64):
 
 if __name__ =='__main__':
 
-    pattern = 'corr'
-    num=107
+    pattern = 'rfe'
+    num=64
     main(pattern,num)
 

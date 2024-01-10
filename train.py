@@ -11,7 +11,7 @@ from sklearn.tree import export_graphviz
 from io import StringIO
 import pydotplus
 
-df = pd.read_csv('data/corr/selected_train_data_107features.csv')
+df = pd.read_csv('data/el/Logic_train_64features.csv')
 
 # npy数据训练
 #df = np.load('data/train.npy')
@@ -24,28 +24,28 @@ x_train = df.iloc[:, 0:-1]  # 选择所有特征列
 y_train = df.iloc[:,   -1]    # 选择最后一列作为标签列
 
 #随机森林
-rf = RandomForestClassifier(criterion='entropy', n_estimators=75,
-      max_depth=None,  # 定义树的深度，可以用来防止过拟合
-      random_state=32
-    # min_samples_split=10,  # 定义至少多少个样本的情况下才继续分叉
-    # min_samples_leaf=0.02  # 定义叶子节点最少需要包含多少个样本（百分比表达），防止过拟合   名称带P则不带这辆个参数
-)
+# rf = RandomForestClassifier(criterion='entropy', n_estimators=75,
+#       max_depth=None,  # 定义树的深度，可以用来防止过拟合
+#       random_state=400
+#     # min_samples_split=10,  # 定义至少多少个样本的情况下才继续分叉
+#     # min_samples_leaf=0.02  # 定义叶子节点最少需要包含多少个样本（百分比表达），防止过拟合   名称带P则不带这辆个参数
+# )
 
 #SVM
-# rf = SVC(decision_function_shape='ovr',kernel='linear')
+# rf = SVC(decision_function_shape='ovr',kernel='linear',random_state=400)
 
 #逻辑回归
-# rf = LogisticRegression(multi_class='ovr')
+rf = LogisticRegression(multi_class='ovr',random_state=400)
 
 # 模型训练
 rf.fit(x_train, y_train)
 
 # modelname = 'Logic_107Features.pkl'
 # modelname = 'SVM_std_107Features.pkl'
-modelname = 'random_forest_model_n75p_std_107Features.pkl'
+modelname = 'Logic_64Features.pkl'
 
 
-jb.dump(rf,'models/corr/'+modelname)
+jb.dump(rf,'models/el/'+modelname)
 # jb.dump(rf,'models/rfe/'+modelname)
 
 print('训练结束，模型保存为:'+modelname)
